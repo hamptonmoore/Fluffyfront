@@ -2,6 +2,7 @@
   import ViewThreadRow from "../components/ViewThreadRow.svelte";
   export let params;
   let comments = [];
+  let pageOwner = "loading...";
   let response = fetch(
     "https://fluffyscratch.hamptonmoore.com/comments/findBy/parentID/" +
       params.id
@@ -9,6 +10,11 @@
     .then((data) => data.json())
     .then((data) => {
       comments = data;
+      if (data.length > 0) {
+        pageOwner = data[0].profile;
+      } else {
+        pageOwner = "Nobody";
+      }
     });
 </script>
 
@@ -21,7 +27,7 @@
 </svelte:head>
 
 <div class="container">
-  <h3>Comment thread ID {params.id} on {1}'s Profile</h3>
+  <h3>Comment thread ID {params.id} on {pageOwner}'s Profile</h3>
   <table class="table">
     <tbody>
       {#await response}
