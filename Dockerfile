@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14-alpine AS builder
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,5 @@ COPY . .
 
 RUN npm run-script build
 
-EXPOSE 5000
-ENV HOST=0.0.0.0
-
-CMD ["npm", "start"]
+FROM socialengine/nginx-spa
+COPY --from=builder /usr/src/app/public/ /app
