@@ -4,7 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --single"
+    "start": "sirv public --single",
+    "deploy": "docker build . -t registry.hamptonmoore.com/fluffyfront && docker push registry.hamptonmoore.com/fluffyfront"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
